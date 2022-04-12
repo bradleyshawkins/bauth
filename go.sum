@@ -1,0 +1,6 @@
+github.com/bradleyshawkins/berror v0.0.7 h1:KEHO9rMcvrhJnrC6/pT/bTGcGNd6oY7oVMNlxRttbNE=
+github.com/bradleyshawkins/berror v0.0.7/go.mod h1:2S/EfvV1Ghq8ftbMQQU+9iPvo2IKZ3XJKGzdUaQhz3I=
+github.com/bradleyshawkins/berror v0.0.8 h1:n7i5B0sH/RhMhz9PYpJoI7NmffqtnrtlRA98p/wyc2M=
+github.com/bradleyshawkins/berror v0.0.8/go.mod h1:Zdqty/BE1K+FbAQgkoIRQjK8nBbynB3LLefCM/WFm6Y=
+github.com/golang-jwt/jwt/v4 v4.4.1 h1:pC5DB52sCeK48Wlb9oPcdhnjkz1TKt1D/P7WKJ0kUcQ=
+github.com/golang-jwt/jwt/v4 v4.4.1/go.mod h1:m21LjoU+eqJr34lmDMbreY2eSTRJ1cv77w39/MY0Ch0=
