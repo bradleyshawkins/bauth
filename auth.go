@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/bradleyshawkins/berror"
 	"github.com/golang-jwt/jwt/v4"
+	"log"
+	"net/http"
 )
 
 type authenticationKey string
@@ -32,4 +34,22 @@ func GetTokenFromContext(ctx context.Context) (*jwt.Token, error) {
 	}
 
 	return token, nil
+}
+
+func AuthenticateMiddleware(a Authenticator) func(handler http.Handler) http.Handler {
+	return func(handler http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			authToken := r.Header.Get("Authentication")
+			token, err := a.Authenticate(authToken)
+			if err != nil {
+				log.Println("Authentication failed. Error:", err)
+				if berr, ok := err.(*berror.Error); ok {
+					berr.WriteAsJson(w)
+				}
+				http.Error(w, "authentication failed", http.StatusUnauthorized)
+			}
+
+			r.WithContext(AddAuthenticationContext(r.Context(), token))
+		})
+	}
 }

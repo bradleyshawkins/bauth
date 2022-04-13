@@ -4,8 +4,6 @@ import (
 	"crypto/rsa"
 	"github.com/bradleyshawkins/berror"
 	"github.com/golang-jwt/jwt/v4"
-	"log"
-	"net/http"
 	"strings"
 )
 
@@ -27,22 +25,6 @@ func NewJWTAuthenticator(publicKey []byte) (*JWTAuthenticator, error) {
 		pubKey: key,
 		parser: p,
 	}, nil
-}
-
-func (j *JWTAuthenticator) AuthenticateMiddleware(handler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		authToken := r.Header.Get("Authentication")
-		token, err := j.Authenticate(authToken)
-		if err != nil {
-			log.Println("Authentication failed. Error:", err)
-			if berr, ok := err.(*berror.Error); ok {
-				berr.WriteAsJson(w)
-			}
-			http.Error(w, "authentication failed", http.StatusUnauthorized)
-		}
-
-		r.WithContext(AddAuthenticationContext(r.Context(), token))
-	})
 }
 
 func (j *JWTAuthenticator) Authenticate(authentication string) (*jwt.Token, error) {
